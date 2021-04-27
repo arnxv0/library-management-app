@@ -2,22 +2,10 @@ package com.arnav.library.activities.StudentMain.fragments;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.view.ViewCompat;
-import androidx.fragment.app.Fragment;
-
-import android.transition.ChangeBounds;
-import android.transition.ChangeImageTransform;
-import android.transition.ChangeTransform;
-import android.transition.Transition;
 import android.transition.TransitionInflater;
-import android.transition.TransitionSet;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -26,6 +14,10 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.arnav.library.QRCodeDialog;
 import com.arnav.library.R;
@@ -66,13 +58,13 @@ public class StudentViewBookFragment extends Fragment {
 //                        .inflateTransition(android.R.transition.explode)
 //        );
 
-        TransitionSet transitionSet = new TransitionSet();
-        transitionSet.setOrdering(TransitionSet.ORDERING_TOGETHER);
-        transitionSet.addTransition(new ChangeBounds())
-                .addTransition(new ChangeTransform())
-                .addTransition(new ChangeImageTransform());
-        fragment.setSharedElementEnterTransition(transitionSet);
-        fragment.setSharedElementReturnTransition(transitionSet);
+//        TransitionSet transitionSet = new TransitionSet();
+//        transitionSet.setOrdering(TransitionSet.ORDERING_TOGETHER);
+//        transitionSet.addTransition(new ChangeBounds())
+//                .addTransition(new ChangeTransform())
+//                .addTransition(new ChangeImageTransform());
+//        fragment.setSharedElementEnterTransition(transitionSet);
+//        fragment.setSharedElementReturnTransition(transitionSet);
 
         return fragment;
     }
@@ -80,6 +72,9 @@ public class StudentViewBookFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        TransitionInflater inflater = TransitionInflater.from(requireContext());
+        setEnterTransition(inflater.inflateTransition(R.transition.slide_in_up));
 
         qrCodeDialog = new QRCodeDialog(getActivity());
 

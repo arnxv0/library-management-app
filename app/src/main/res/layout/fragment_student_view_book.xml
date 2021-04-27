@@ -124,7 +124,6 @@
         android:layout_height="150dp"
         app:cornerRadius="20dp"
         android:src="@drawable/libraryloginimg"
-        android:background="@color/white"/>
-
+        android:background="@drawable/list_image_container_background" />
 
 </RelativeLayout>

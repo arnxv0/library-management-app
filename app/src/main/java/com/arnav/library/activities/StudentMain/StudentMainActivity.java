@@ -47,7 +47,7 @@ public class StudentMainActivity extends AppCompatActivity implements FragmentAc
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.student_fragment_container, StudentHomeFragment.newInstance())
+                .add(R.id.student_fragment_container, StudentHomeFragment.newInstance(student, this))
                 .commit();
 
         setFragmentListeners();
@@ -95,7 +95,7 @@ public class StudentMainActivity extends AppCompatActivity implements FragmentAc
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.student_fragment_container, StudentHomeFragment.newInstance())
+                .add(R.id.student_fragment_container, StudentHomeFragment.newInstance(student, this))
                 .addToBackStack(null)
                 .commit();
     }
