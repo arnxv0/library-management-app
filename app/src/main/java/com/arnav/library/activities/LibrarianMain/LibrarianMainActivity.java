@@ -127,6 +127,7 @@ public class LibrarianMainActivity extends AppCompatActivity implements Fragment
         if(previousItemId == profileFragmentId) {
             return;
         }
+        previousItemId = profileFragmentId;
 
         if(getSupportFragmentManager().getBackStackEntryCount() >= 2) {
             getSupportFragmentManager().popBackStack();

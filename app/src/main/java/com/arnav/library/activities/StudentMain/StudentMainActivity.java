@@ -119,11 +119,11 @@ public class StudentMainActivity extends AppCompatActivity implements FragmentAc
         if (previousItemId == profileFragmentId) {
             return;
         }
+        previousItemId = profileFragmentId;
 
         if(getSupportFragmentManager().getBackStackEntryCount() >= 2) {
             getSupportFragmentManager().popBackStack();
         }
-        previousItemId = profileFragmentId;
         getSupportFragmentManager().popBackStack();
         getSupportFragmentManager()
                 .beginTransaction()
