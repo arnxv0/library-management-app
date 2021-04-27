@@ -1,17 +1,16 @@
 package com.arnav.library.activities.StudentMain.fragments;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.arnav.library.LoadingDialog;
 import com.arnav.library.R;
@@ -119,20 +118,13 @@ public class StudentSearchBooksFragment extends Fragment {
     private void getBookList() {
         //loadingDialog.showDialog();
         binding.studentSearchBooksLoading.setVisibility(View.VISIBLE);
-        db.collection("books").whereEqualTo("libraryCode", student.getLibraryCode())
+        db.collection("books")
+                .whereEqualTo("libraryCode", student.getLibraryCode())
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                            Book newBook = new Book(
-                                    document.getString("title"),
-                                    document.getString("author"),
-                                    document.getString("libraryCode"),
-                                    document.getString("description"),
-                                    document.getString("librarianID"),
-                                    document.getString("availableCount"),
-                                    document.getId()
-                            );
+                            Book newBook = new Book(document);
                             bookList.add(newBook);
                         }
                         studentBooksListAdapter.updateSecondList();

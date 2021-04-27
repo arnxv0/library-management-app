@@ -40,7 +40,7 @@ public class StudentMainActivity extends AppCompatActivity implements FragmentAc
         setContentView(binding.getRoot());
 
         binding.studentBottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
-        previousItemId = 0;
+        previousItemId = R.id.page_1;
 
         student = new Student(getIntent().getBundleExtra("student"));
         bookShown = false;
@@ -49,7 +49,6 @@ public class StudentMainActivity extends AppCompatActivity implements FragmentAc
                 .beginTransaction()
                 .add(R.id.student_fragment_container, StudentHomeFragment.newInstance(student, this))
                 .commit();
-
         setFragmentListeners();
         setCurrentDate();
     }
@@ -60,44 +59,34 @@ public class StudentMainActivity extends AppCompatActivity implements FragmentAc
                 int itemId = item.getItemId();
                 if (previousItemId == itemId) {
                     return true;
+                } else if (previousItemId != R.id.page_1) {
+                    getSupportFragmentManager().popBackStack();
                 }
                 previousItemId = itemId;
-                getSupportFragmentManager().popBackStack();
 
+                if (getSupportFragmentManager().getBackStackEntryCount() >= 2) {
+                    Log.i("HomeFragmentin", String.valueOf(getSupportFragmentManager().getBackStackEntryCount()));
+                    getSupportFragmentManager().popBackStack();
+                }
                 if (itemId == R.id.page_1) {
                     showStudentHomeFragment();
-                    return true;
                 } else if (itemId == R.id.page_2) {
-                    selectedFragment = StudentSearchBooksFragment.newInstance(student.getBundle(), this);
+                    showStudentSearchBooksFragment();
                 } else if (itemId == R.id.page_3) {
-                    selectedFragment = StudentSearchBooksFragment.newInstance(student.getBundle(), this);
+                    showStudentSearchBooksFragment();
                 } else if (itemId == R.id.page_4) {
-                    selectedFragment = StudentSearchBooksFragment.newInstance(student.getBundle(), this);
+                    showStudentSearchBooksFragment();
                 }
-
-                Log.i("Fragment", String.valueOf(getSupportFragmentManager().getBackStackEntryCount()));
-
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .add(R.id.student_fragment_container, selectedFragment)
-                        .addToBackStack(null)
-                        .commit();
                 return true;
-
             };
 
     private void showStudentHomeFragment() {
-        Log.i("HomeFragment", String.valueOf(getSupportFragmentManager().getBackStackEntryCount()));
-
-        if (getSupportFragmentManager().getBackStackEntryCount() >= 2) {
-            getSupportFragmentManager().popBackStack();
-        }
-
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.student_fragment_container, StudentHomeFragment.newInstance(student, this))
                 .addToBackStack(null)
                 .commit();
+        getSupportFragmentManager().popBackStackImmediate();
     }
 
     public void showStudentSearchBooksFragment() {
@@ -186,14 +175,15 @@ public class StudentMainActivity extends AppCompatActivity implements FragmentAc
         }
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
-//            this.finish();
-//        } else {
-//            getSupportFragmentManager().popBackStack();
-//        }
-//    }
+    @Override
+    public void onBackPressed() {
+        if (previousItemId == R.id.page_2 ||
+                previousItemId == R.id.page_3 ||
+                previousItemId == R.id.page_4) {
+            previousItemId = 0;
+        }
+        super.onBackPressed();
+    }
 }
 
 
