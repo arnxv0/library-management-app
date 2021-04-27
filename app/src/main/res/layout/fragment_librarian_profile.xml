@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".activities.LibrarianMain.fragments.LibrarianProfileFragment">
+
+    <TextView
+        android:id="@+id/myLibrarianTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/librarianName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Librarian"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/librarianLogoutButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/librarianProfileIcon"
+        android:layout_marginTop="250dp"
+        android:backgroundTint="@color/black"
+        android:text="Logout"
+        android:textColor="#FFFFFF"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/librarianName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/librarianProfileIcon"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif-black"
+        android:foregroundTint="@color/black"
+        android:text="Name"
+        android:textColor="@color/black"
+        android:textSize="30sp" />
+
+    <ImageView
+        android:id="@+id/librarianProfileIcon"
+        android:layout_width="160dp"
+        android:layout_height="128dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="#FFFFFF"
+        android:src="@drawable/ic_baseline_account_circle_24" />
+
+</RelativeLayout>

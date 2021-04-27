@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".activities.StudentMain.StudentMainActivity">
+
+    <TextView
+        android:id="@+id/dateText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/montserrat"
+        android:text="30"
+        android:textColor="@color/my_black"
+        android:textSize="32sp" />
+
+    <TextView
+        android:id="@+id/dayText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="32dp"
+        android:layout_toEndOf="@+id/dateText"
+        android:fontFamily="@font/montserrat"
+        android:text="Monday"
+        android:textColor="@color/my_black"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/monthText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dayText"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="-5dp"
+        android:layout_toEndOf="@+id/dateText"
+        android:fontFamily="@font/montserrat"
+        android:text="March 2020"
+        android:textColor="@color/my_black"
+        android:textSize="12sp" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="37dp"
+        android:layout_marginEnd="40dp"
+        android:background="@color/white"
+        android:contentDescription="Profile"
+        android:onClick="showStudentProfileFragment"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
+        android:src="@drawable/ic_baseline_person_24" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/student_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="100dp"
+        android:layout_above="@id/student_bottom_navigation" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/student_bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/my_black"
+        app:itemTextColor="@drawable/navigation_color_selector"
+        app:itemIconTint="@drawable/navigation_color_selector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/student_bottom_navigation_menu" />
+
+</RelativeLayout>

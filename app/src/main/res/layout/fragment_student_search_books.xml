@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fragment_drawer_shape">
+
+    <ProgressBar
+        android:id="@+id/studentSearchBooksLoading"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/studentSearchBooksSearchView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:visibility="gone" />
+
+    <SearchView
+        android:id="@+id/studentSearchBooksSearchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@id/cylinderSearchBookImageView"
+        android:queryHint="Search book"
+        android:focusableInTouchMode="true"
+        android:searchIcon="@drawable/ic_baseline_search_24"
+        android:background="@drawable/custom_input" />
+
+    <ListView
+        android:id="@+id/studentSearchBooksListView"
+        android:layout_below="@id/studentSearchBooksSearchView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="20dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="12.0sp" />
+
+    <ImageView
+        android:id="@+id/cylinderSearchBookImageView"
+        android:layout_width="50dp"
+        android:layout_height="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        app:srcCompat="@drawable/drawer_cilinder_button" />
+
+</RelativeLayout>

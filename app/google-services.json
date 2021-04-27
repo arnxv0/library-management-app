@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "312059498137",
+    "project_id": "library-7e979",
+    "storage_bucket": "library-7e979.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:312059498137:android:38116acacd44aacf6cb208",
+        "android_client_info": {
+          "package_name": "com.arnav.library"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "312059498137-jr0speahl7ogolnqslg10doidrmf2s9k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBev4iZDsvbUjorGgZ92tZNE5eV9GZvB0s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "312059498137-jr0speahl7ogolnqslg10doidrmf2s9k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

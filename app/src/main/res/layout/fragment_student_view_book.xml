@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fragment_drawer_shape"
+    tools:context=".activities.StudentMain.fragments.StudentViewBookFragment">
+
+    <ImageView
+        android:id="@+id/cylinderViewBookImageView"
+        android:layout_width="50dp"
+        android:layout_height="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        app:srcCompat="@drawable/drawer_cilinder_button" />
+
+    <Button
+        android:id="@+id/buttonBorrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="70dp"
+        android:layout_marginBottom="50dp"
+        android:backgroundTint="@color/black"
+        android:fontFamily="@font/montserrat"
+        android:letterSpacing=".01"
+        android:paddingTop="7dp"
+        android:paddingBottom="7dp"
+        android:text="Borrow"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:cornerRadius="10dp" />
+
+    <Button
+        android:id="@+id/buttonReturn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="70dp"
+        android:layout_marginBottom="50dp"
+        android:backgroundTint="@color/black"
+        android:fontFamily="@font/montserrat"
+        android:letterSpacing=".01"
+        android:paddingTop="7dp"
+        android:paddingBottom="7dp"
+        android:text="Return"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:cornerRadius="10dp" />
+
+    <TextView
+        android:id="@+id/bookTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/viewBookCover"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center"
+        android:text="Book Title"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/authorName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bookTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-5dp"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center"
+        android:text="Author"
+        android:textColor="@color/my_black"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/bookAvailability"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/authorName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center"
+        android:text="Available"
+        android:textColor="@color/my_black"
+        android:textSize="16sp"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/bookDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/buttonReturn"
+        android:layout_below="@+id/bookAvailability"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:ems="15"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center"
+        android:inputType="textMultiLine"
+        android:isScrollContainer="true"
+        android:scrollbars="vertical"
+        android:text="Book description"
+        android:textColor="@color/my_black"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:id="@+id/viewBookCover"
+        android:layout_below="@id/cylinderViewBookImageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        app:cornerRadius="20dp"
+        android:src="@drawable/libraryloginimg"
+        android:background="@color/white"/>
+
+
+</RelativeLayout>

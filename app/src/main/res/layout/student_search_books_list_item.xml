@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/card_background_with_shadow" >
+
+    <ImageView
+        android:id="@+id/listItemBookImageView"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/libraryloginimg"
+        android:background="@color/white" />
+
+    <TextView
+        android:id="@+id/listItemBookTitleTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="20dp"
+        android:layout_toEndOf="@+id/listItemBookImageView"
+        android:fontFamily="@font/montserrat"
+        android:text="Book Title"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/listItemBookAvailableTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="140dp"
+        android:layout_marginEnd="50dp"
+        android:text="Available"
+        android:textColor="@color/my_black"
+        android:textColorHighlight="#FFFFFF"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/listItemBookAuthorTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/listItemBookTitleTextView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20dp"
+        android:layout_toEndOf="@+id/listItemBookImageView"
+        android:text="Author"
+        android:textColor="@color/my_black"
+        android:textColorHighlight="#FFFFFF"
+        android:textSize="16sp" />
+
+</RelativeLayout>
