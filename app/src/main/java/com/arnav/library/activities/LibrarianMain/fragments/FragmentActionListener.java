@@ -28,5 +28,8 @@ public interface FragmentActionListener {
 
     int EDIT_BOOK_DONE_ACTION_VALUE = 12;
 
+    int SHOW_STUDENT_PROFILE_FRAGMENT_ACTION_VALUE = 13;
+    String SHOW_STUDENT_PROFILE_FRAGMENT_ACTION_KEY = "student";
+
     void onActionPerformed(Bundle bundle);
 }

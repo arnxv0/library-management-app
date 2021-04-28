@@ -24,11 +24,13 @@ import com.arnav.library.activities.LibrarianMain.fragments.LibrarianProfileFrag
 import com.arnav.library.activities.LibrarianMain.fragments.LibrarianScanCodeFragment;
 import com.arnav.library.activities.LibrarianMain.fragments.LibrarianShowSearchListFragment;
 import com.arnav.library.activities.LibrarianMain.fragments.LibrarianViewBookFragment;
+import com.arnav.library.activities.LibrarianMain.fragments.LibrarianViewStudentFragment;
 import com.arnav.library.activities.Login.LoginActivity;
 import com.arnav.library.databinding.ActivityLibrarianMainBinding;
 import com.arnav.library.models.Book;
 import com.arnav.library.models.Librarian;
 import com.arnav.library.models.Record;
+import com.arnav.library.models.Student;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -183,6 +185,16 @@ public class LibrarianMainActivity extends AppCompatActivity implements Fragment
                 .commit();
     }
 
+    public void showViewStudentFragment(Student student) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(
+                        R.id.librarian_fragment_container,
+                        LibrarianViewStudentFragment.newInstance(student)
+                )
+                .addToBackStack(null)
+                .commit();
+    }
 
     private void showScanCodeFragment() {
         requestCamera();
@@ -324,6 +336,10 @@ public class LibrarianMainActivity extends AppCompatActivity implements Fragment
             Book book = new Book(bundle.getBundle(FragmentActionListener.SHOW_EDIT_BOOK_FRAGMENT_ACTION_KEY));
             getSupportFragmentManager().popBackStack();
             showEditBookFragment(book);
+        } else if (selectedAction == FragmentActionListener.SHOW_STUDENT_PROFILE_FRAGMENT_ACTION_VALUE) {
+            Student student = new Student(bundle.getBundle(FragmentActionListener.SHOW_STUDENT_PROFILE_FRAGMENT_ACTION_KEY));
+            getSupportFragmentManager().popBackStack();
+            showViewStudentFragment(student);
         }
 
     }

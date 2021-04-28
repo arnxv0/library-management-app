@@ -117,7 +117,19 @@ public class LibrarianShowSearchListFragment extends Fragment {
                 getActivity(), binding.librarianShowSearchListRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Log.i("click", "clicked");
+                if (fragmentActionListener != null) {
+                    Student student = (Student) filterObjectList.get(position);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(
+                            FragmentActionListener.ACTION_KEY,
+                            FragmentActionListener.SHOW_STUDENT_PROFILE_FRAGMENT_ACTION_VALUE
+                    );
+                    bundle.putBundle(
+                            FragmentActionListener.SHOW_STUDENT_PROFILE_FRAGMENT_ACTION_KEY,
+                            student.getBundle()
+                    );
+                    fragmentActionListener.onActionPerformed(bundle);
+                }
             }
 
             @Override

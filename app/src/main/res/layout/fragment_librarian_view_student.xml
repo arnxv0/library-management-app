@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/fragment_drawer_shape"
+    tools:context=".activities.LibrarianMain.fragments.LibrarianViewStudentFragment">
+
+    <ImageView
+        android:id="@+id/cylinderSearchBookImageView"
+        android:layout_width="50dp"
+        android:layout_height="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        app:srcCompat="@drawable/drawer_cilinder_button" />
+
+    <ImageView
+        android:id="@+id/studentLogo"
+        android:layout_width="100dp"
+        android:layout_height="120dp"
+        android:layout_below="@+id/cylinderSearchBookImageView"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="45dp"
+        android:background="@drawable/custom_input"
+        android:src="@drawable/ic_baseline_person_24"
+        app:cornerRadius="50dp" />
+
+    <TextView
+        android:id="@+id/librarianViewStudentName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cylinderSearchBookImageView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="20dp"
+        android:layout_toEndOf="@+id/studentLogo"
+        android:ems="10"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center"
+        android:text="Student Name"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/librarianViewStudentLibraryIDLabel"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/studentLogo"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="25dp"
+        android:ems="10"
+        android:fontFamily="@font/montserrat"
+        android:text="Library ID :"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/librarianViewStudentLibraryID"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/librarianViewStudentLibraryIDLabel"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="20dp"
+        android:layout_toEndOf="@+id/librarianViewStudentLibraryIDLabel"
+        android:ems="10"
+        android:fontFamily="@font/montserrat"
+        android:text="Library ID"
+        android:textStyle="italic"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/librarianViewStudentEmailIDLabel"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/librarianViewStudentLibraryID"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:fontFamily="@font/montserrat"
+        android:text="Email :"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/librarianViewStudentEmailID"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/librarianViewStudentEmailIDLabel"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="20dp"
+        android:ems="10"
+        android:fontFamily="@font/montserrat"
+        android:text="Email ID"
+        android:textColor="@color/black"
+        android:textStyle="italic"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/librarianViewStudentPhoneNoLabel"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/librarianViewStudentEmailID"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:fontFamily="@font/montserrat"
+        android:text="Phone :"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/librarianViewStudentPhoneNo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/librarianViewStudentPhoneNoLabel"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:fontFamily="@font/montserrat"
+        android:text="Phone no."
+        android:textColor="@color/black"
+        android:textStyle="italic"
+        android:textSize="24sp" />
+
+</RelativeLayout>
