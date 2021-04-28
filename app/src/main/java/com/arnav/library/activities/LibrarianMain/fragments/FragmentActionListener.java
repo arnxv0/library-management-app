@@ -1,7 +1,6 @@
 package com.arnav.library.activities.LibrarianMain.fragments;
 
 import android.os.Bundle;
-import android.view.View;
 
 public interface FragmentActionListener {
 
@@ -16,6 +15,8 @@ public interface FragmentActionListener {
 
     int UPLOAD_BOOK_ACTION_VALUE = 4;
     String UPLOAD_BOOK_URI_ACTION_KEY = "uploadBIU";
+
+    int SHOW_STUDENTS_LIST_FRAGMENT_ACTION_VALUE = 5;
 
     void onActionPerformed(Bundle bundle);
 }

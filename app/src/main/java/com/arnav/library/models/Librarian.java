@@ -2,6 +2,8 @@ package com.arnav.library.models;
 
 import android.os.Bundle;
 
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,6 +34,15 @@ public class Librarian {
                 this.phone = phone;
                 this.uid = uid;
                 this.libraryCode = libraryCode;
+        }
+
+        public Librarian(QueryDocumentSnapshot document) {
+                this.name = document.getString("name");
+                this.isLibrarian = document.getString("isLibrarian");
+                this.email = document.getString("email");
+                this.phone = document.getString("phone");
+                this.uid = document.getString("uid");
+                this.libraryCode = document.getString("libraryCode");
         }
 
         public Map<String, Object> getObjectMap() {

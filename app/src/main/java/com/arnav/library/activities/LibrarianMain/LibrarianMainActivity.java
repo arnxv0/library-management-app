@@ -21,6 +21,7 @@ import com.arnav.library.activities.LibrarianMain.fragments.LibrarianAddStudentF
 import com.arnav.library.activities.LibrarianMain.fragments.LibrarianHomeFragment;
 import com.arnav.library.activities.LibrarianMain.fragments.LibrarianProfileFragment;
 import com.arnav.library.activities.LibrarianMain.fragments.LibrarianScanCodeFragment;
+import com.arnav.library.activities.LibrarianMain.fragments.LibrarianShowSearchListFragment;
 import com.arnav.library.activities.Login.LoginActivity;
 import com.arnav.library.databinding.ActivityLibrarianMainBinding;
 import com.arnav.library.models.Librarian;
@@ -51,11 +52,12 @@ public class LibrarianMainActivity extends AppCompatActivity implements Fragment
 
         librarian = new Librarian(getIntent().getBundleExtra("librarian"));
 
+        previousItemId = R.id.page_1;
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(
                         R.id.librarian_fragment_container,
-                        LibrarianHomeFragment.newInstance()
+                        LibrarianHomeFragment.newInstance(this)
                 )
                 .commit();
 
@@ -69,10 +71,17 @@ public class LibrarianMainActivity extends AppCompatActivity implements Fragment
                 int itemId = item.getItemId();
                 if (previousItemId == itemId) {
                     return true;
+                } else if (previousItemId != R.id.page_1) {
+                    getSupportFragmentManager().popBackStack();
                 }
                 previousItemId = itemId;
 
-                Log.i("stn", String.valueOf(getSupportFragmentManager().getBackStackEntryCount()));
+                Log.i("stn1", String.valueOf(getSupportFragmentManager().getBackStackEntryCount()));
+
+                if (getSupportFragmentManager().getBackStackEntryCount() >= 2) {
+                    Log.i("HomeFragmentin", String.valueOf(getSupportFragmentManager().getBackStackEntryCount()));
+                    getSupportFragmentManager().popBackStack();
+                }
 
                 getSupportFragmentManager().popBackStack();
                 if (itemId == R.id.page_1) {
@@ -91,9 +100,10 @@ public class LibrarianMainActivity extends AppCompatActivity implements Fragment
     private void showHomeFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.librarian_fragment_container, LibrarianHomeFragment.newInstance())
+                .add(R.id.librarian_fragment_container, LibrarianHomeFragment.newInstance(this))
                 .addToBackStack(null)
                 .commit();
+        getSupportFragmentManager().popBackStackImmediate();
     }
 
     private void showAddBookFragment() {
@@ -118,13 +128,29 @@ public class LibrarianMainActivity extends AppCompatActivity implements Fragment
                 .commit();
     }
 
+    public void showSearchStudentFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(
+                        R.id.librarian_fragment_container,
+                        LibrarianShowSearchListFragment.newInstance(
+                                librarian,
+                                this,
+                                LibrarianShowSearchListFragment.STUDENTS_LIST
+                        )
+                )
+                .addToBackStack(null)
+                .commit();
+    }
+
+
     private void showScanCodeFragment() {
         requestCamera();
     }
 
     public void showProfileFragment(View view) {
         int profileFragmentId = 1;
-        if(previousItemId == profileFragmentId) {
+        if (previousItemId == profileFragmentId) {
             return;
         }
         previousItemId = profileFragmentId;
@@ -202,8 +228,8 @@ public class LibrarianMainActivity extends AppCompatActivity implements Fragment
     @Override
     public void onBackPressed() {
         if (previousItemId == R.id.page_2 ||
-            previousItemId == R.id.page_3 ||
-            previousItemId == R.id.page_4 ) {
+                previousItemId == R.id.page_3 ||
+                previousItemId == R.id.page_4) {
             previousItemId = 0;
         }
         super.onBackPressed();
@@ -233,13 +259,18 @@ public class LibrarianMainActivity extends AppCompatActivity implements Fragment
 
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(LibrarianMainActivity.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
-            finish();
 
         } else if (selectedAction == FragmentActionListener.ADD_RECORD_ACTION_VALUE) {
             previousItemId = R.id.page_4;
             getSupportFragmentManager().popBackStack();
             showScanCodeFragment();
+        } else if (selectedAction == FragmentActionListener.SHOW_STUDENTS_LIST_FRAGMENT_ACTION_VALUE) {
+            previousItemId = 69;
+            getSupportFragmentManager().popBackStack();
+            showSearchStudentFragment();
+
         }
 
     }

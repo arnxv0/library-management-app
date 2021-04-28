@@ -1,7 +1,6 @@
 package com.arnav.library.activities.StudentMain.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.view.ViewCompat;
 
 import com.arnav.library.R;
 import com.arnav.library.models.Book;
@@ -73,7 +71,7 @@ public class StudentBooksListAdapter extends ArrayAdapter {
         return position;
     }
 
-    public void filter(String charText) {
+    public ArrayList<Book> filter(String charText) {
         charText = charText.toLowerCase();
         filterBookList.clear();
         if (charText.length() == 0) {
@@ -87,6 +85,7 @@ public class StudentBooksListAdapter extends ArrayAdapter {
             }
         }
         notifyDataSetChanged();
+        return filterBookList;
     }
 
     public void updateSecondList() {

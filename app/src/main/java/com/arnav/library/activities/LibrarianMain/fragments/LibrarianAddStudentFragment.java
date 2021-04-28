@@ -95,6 +95,7 @@ public class LibrarianAddStudentFragment extends Fragment {
                                 .addOnCompleteListener(task1 -> {
                                     loadingDialog.hideDialog();
                                     if (task1.isSuccessful()) {
+                                        clearInput();
                                         Toast.makeText(getContext(), "User Added",
                                                 Toast.LENGTH_SHORT).show();
                                     } else {
@@ -109,6 +110,14 @@ public class LibrarianAddStudentFragment extends Fragment {
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    private void clearInput() {
+        binding.addStudentName.getText().clear();
+        binding.addStudentEmail.getText().clear();
+        binding.addStudentPassword.getText().clear();
+        binding.addStudentPhone.getText().clear();
+        binding.addStudentLibraryID.getText().clear();
     }
 
     @Override

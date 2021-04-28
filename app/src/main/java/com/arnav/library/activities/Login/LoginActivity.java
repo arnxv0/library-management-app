@@ -88,22 +88,16 @@ public class LoginActivity extends AppCompatActivity {
                                         .addOnCompleteListener(task1 -> {
                                             loadingDialog.hideDialog();
                                             if (task1.isSuccessful()) {
+                                                Student student = null;
                                                 for (QueryDocumentSnapshot document : task1.getResult()) {
-                                                    Student student = new Student(
-                                                            document.getString("name"),
-                                                            document.getString("libraryID"),
-                                                            document.getString("email"),
-                                                            document.getString("phone"),
-                                                            document.getString("uid"),
-                                                            document.getString("libraryCode")
-                                                    );
-
-                                                    Intent intent = new Intent(LoginActivity.this, StudentMainActivity.class);
-                                                    intent.putExtra("student", student.getBundle());
-                                                    startActivity(intent);
-                                                    finish();
-                                                    break;
+                                                    student = new Student(document);
                                                 }
+
+                                                Intent intent = new Intent(LoginActivity.this, StudentMainActivity.class);
+                                                assert student != null;
+                                                intent.putExtra("student", student.getBundle());
+                                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                startActivity(intent);
                                             } else {
                                                 Log.w(TAG, "Error getting documents.", task.getException());
                                             }
@@ -113,21 +107,15 @@ public class LoginActivity extends AppCompatActivity {
                             } else {
                                 loadingDialog.hideDialog();
                                 for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                    Librarian librarian = null;
                                     if (Objects.equals(document.get("uid"), currentUserId)) {
-
-                                        Intent intent = new Intent(LoginActivity.this, LibrarianMainActivity.class);
-                                        Librarian librarian = new Librarian(
-                                                document.getString("name"),
-                                                document.getString("isLibrarian"),
-                                                document.getString("email"),
-                                                document.getString("phone"),
-                                                document.getString("uid"),
-                                                document.getString("libraryCode")
-                                        );
-                                        intent.putExtra("librarian", librarian.getBundle());
-                                        startActivity(intent);
-                                        finish();
+                                        librarian = new Librarian(document);
                                     }
+                                    Intent intent = new Intent(LoginActivity.this, LibrarianMainActivity.class);
+                                    assert librarian != null;
+                                    intent.putExtra("librarian", librarian.getBundle());
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
                                 }
 
                             }
@@ -136,8 +124,6 @@ public class LoginActivity extends AppCompatActivity {
                             Log.w(TAG, "Error getting documents.", task.getException());
                         }
                     });
-
-
         }
 
     }

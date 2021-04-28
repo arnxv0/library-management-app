@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import com.arnav.library.R;
 import com.arnav.library.activities.Login.LoginActivity;
@@ -55,7 +54,6 @@ public class StudentMainActivity extends AppCompatActivity implements FragmentAc
 
     private final BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
             item -> {
-                Fragment selectedFragment = null;
                 int itemId = item.getItemId();
                 if (previousItemId == itemId) {
                     return true;
@@ -170,8 +168,8 @@ public class StudentMainActivity extends AppCompatActivity implements FragmentAc
         } else if (selectedAction == FragmentActionListener.LOGOUT_ACTION_VALUE) {
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(StudentMainActivity.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
-            finish();
         }
     }
 

@@ -33,6 +33,7 @@ public class StudentSearchBooksFragment extends Fragment {
     FirebaseFirestore db;
     Student student;
     List<Book> bookList;
+    ArrayList<Book> filterBookList;
     StudentBooksListAdapter studentBooksListAdapter;
     FragmentActionListener fragmentActionListener;
 
@@ -61,6 +62,7 @@ public class StudentSearchBooksFragment extends Fragment {
         loadingDialog = new LoadingDialog(getActivity());
         loadingDialog.initializeLoadingDialog();
         db = FirebaseFirestore.getInstance();
+        filterBookList = new ArrayList<>();
     }
 
     @Override
@@ -95,7 +97,7 @@ public class StudentSearchBooksFragment extends Fragment {
                 );
                 bundle.putBundle(
                         FragmentActionListener.SELECTED_BOOK_KEY,
-                        bookList.get(i).getBundle()
+                        filterBookList.get(i).getBundle()
                 );
                 fragmentActionListener.onActionPerformed(bundle, view1);
             }
@@ -109,7 +111,7 @@ public class StudentSearchBooksFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String s) {
-                studentBooksListAdapter.filter(s);
+                filterBookList = studentBooksListAdapter.filter(s);
                 return false;
             }
         });
@@ -127,6 +129,7 @@ public class StudentSearchBooksFragment extends Fragment {
                             Book newBook = new Book(document);
                             bookList.add(newBook);
                         }
+                        filterBookList.addAll(bookList);
                         studentBooksListAdapter.updateSecondList();
                         binding.studentSearchBooksLoading.setVisibility(View.GONE);
                         //loadingDialog.hideDialog();
