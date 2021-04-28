@@ -22,8 +22,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -176,19 +178,20 @@ public class LibrarianAddRecordFragment extends Fragment {
 
     private void showDateDialog() {
         DatePickerDialog.OnDateSetListener listener = (view, year, monthOfYear, dayOfMonth) -> {
-            String dateText = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
-            binding.editTextDate.setText(dateText);
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             calendar.set(Calendar.MONTH, monthOfYear);
             calendar.set(Calendar.YEAR, year);
-            record.setDueDate(dateText);
+            String myFormat = "dd/MM/yy"; //In which you need put here
+            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+            binding.editTextDate.setText(sdf.format(calendar.getTime()));
+            record.setDueDate(sdf.format(calendar.getTime()));
         };
         DatePickerDialog dpDialog = new DatePickerDialog(
                 getActivity(),
                 listener,
-                calendar.get(Calendar.DAY_OF_MONTH),
+                calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.YEAR)
+                calendar.get(Calendar.DAY_OF_MONTH)
         );
         dpDialog.show();
     }

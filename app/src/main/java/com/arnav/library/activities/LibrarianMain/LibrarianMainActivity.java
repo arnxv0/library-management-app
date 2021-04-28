@@ -18,12 +18,15 @@ import com.arnav.library.activities.LibrarianMain.fragments.FragmentActionListen
 import com.arnav.library.activities.LibrarianMain.fragments.LibrarianAddBookFragment;
 import com.arnav.library.activities.LibrarianMain.fragments.LibrarianAddRecordFragment;
 import com.arnav.library.activities.LibrarianMain.fragments.LibrarianAddStudentFragment;
+import com.arnav.library.activities.LibrarianMain.fragments.LibrarianEditBookFragment;
 import com.arnav.library.activities.LibrarianMain.fragments.LibrarianHomeFragment;
 import com.arnav.library.activities.LibrarianMain.fragments.LibrarianProfileFragment;
 import com.arnav.library.activities.LibrarianMain.fragments.LibrarianScanCodeFragment;
 import com.arnav.library.activities.LibrarianMain.fragments.LibrarianShowSearchListFragment;
+import com.arnav.library.activities.LibrarianMain.fragments.LibrarianViewBookFragment;
 import com.arnav.library.activities.Login.LoginActivity;
 import com.arnav.library.databinding.ActivityLibrarianMainBinding;
+import com.arnav.library.models.Book;
 import com.arnav.library.models.Librarian;
 import com.arnav.library.models.Record;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -138,6 +141,43 @@ public class LibrarianMainActivity extends AppCompatActivity implements Fragment
                                 this,
                                 LibrarianShowSearchListFragment.STUDENTS_LIST
                         )
+                )
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void showSearchBookFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(
+                        R.id.librarian_fragment_container,
+                        LibrarianShowSearchListFragment.newInstance(
+                                librarian,
+                                this,
+                                LibrarianShowSearchListFragment.EDIT_BOOK_LIST
+                        )
+                )
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void showViewBookFragment(Book book) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(
+                        R.id.librarian_fragment_container,
+                        LibrarianViewBookFragment.newInstance(book, this)
+                )
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void showEditBookFragment(Book book) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(
+                        R.id.librarian_fragment_container,
+                        LibrarianEditBookFragment.newInstance(librarian, this, book)
                 )
                 .addToBackStack(null)
                 .commit();
@@ -270,7 +310,20 @@ public class LibrarianMainActivity extends AppCompatActivity implements Fragment
             previousItemId = 69;
             getSupportFragmentManager().popBackStack();
             showSearchStudentFragment();
-
+        } else if (selectedAction == FragmentActionListener.SHOW_BOOK_LIST_FRAGMENT_ACTION_VALUE) {
+            getSupportFragmentManager().popBackStack();
+            showSearchBookFragment();
+        } else if (selectedAction == FragmentActionListener.SHOW_VIEW_BOOK_FRAGMENT_ACTION_VALUE) {
+            previousItemId = 69;
+            Book book = new Book(bundle.getBundle(FragmentActionListener.SHOW_VIEW_BOOK_FRAGMENT_ACTION_KEY));
+            getSupportFragmentManager().popBackStack();
+            showViewBookFragment(book);
+        } else if (selectedAction == FragmentActionListener.EDIT_BOOK_DONE_ACTION_VALUE) {
+            getSupportFragmentManager().popBackStack();
+        } else if (selectedAction == FragmentActionListener.SHOW_EDIT_BOOK_FRAGMENT_ACTION_VALUE) {
+            Book book = new Book(bundle.getBundle(FragmentActionListener.SHOW_EDIT_BOOK_FRAGMENT_ACTION_KEY));
+            getSupportFragmentManager().popBackStack();
+            showEditBookFragment(book);
         }
 
     }

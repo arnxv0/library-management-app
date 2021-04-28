@@ -16,9 +16,11 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.arnav.library.R;
+import com.arnav.library.activities.LibrarianMain.adapters.LibrarianShowAllBooksListAdapter;
 import com.arnav.library.activities.LibrarianMain.adapters.LibrarianShowAllStudentsListAdapter;
 import com.arnav.library.activities.StudentMain.listeners.RecyclerItemClickListener;
 import com.arnav.library.databinding.FragmentLibrarianShowSearchListBinding;
+import com.arnav.library.models.Book;
 import com.arnav.library.models.Librarian;
 import com.arnav.library.models.Student;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -35,6 +37,9 @@ public class LibrarianShowSearchListFragment extends Fragment {
     public static int STUDENTS_LIST = 3;
     public static int EDIT_BOOK_LIST = 4;
 
+    LibrarianShowAllStudentsListAdapter librarianShowAllStudentsListAdapter;
+    LibrarianShowAllBooksListAdapter librarianShowAllBooksListAdapter;
+
     int chosenList;
 
     FragmentLibrarianShowSearchListBinding binding;
@@ -43,7 +48,6 @@ public class LibrarianShowSearchListFragment extends Fragment {
     Librarian librarian;
     List<Object> objectList;
     ArrayList<Object> filterObjectList;
-    LibrarianShowAllStudentsListAdapter librarianShowAllStudentsListAdapter;
     FragmentActionListener fragmentActionListener;
 
     public LibrarianShowSearchListFragment() {
@@ -74,7 +78,7 @@ public class LibrarianShowSearchListFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         assert this.getArguments() != null;
         librarian = new Librarian(this.getArguments().getBundle("librarian"));
@@ -97,6 +101,9 @@ public class LibrarianShowSearchListFragment extends Fragment {
         if (chosenList == STUDENTS_LIST) {
             getStudentsList();
             studentsListSetup();
+        } else if (chosenList == EDIT_BOOK_LIST) {
+            getBookList();
+            bookListSetup();
         }
     }
 
@@ -133,7 +140,55 @@ public class LibrarianShowSearchListFragment extends Fragment {
         });
     }
 
-    void getStudentsList() {
+    private void bookListSetup() {
+        librarianShowAllBooksListAdapter = new LibrarianShowAllBooksListAdapter(filterObjectList);
+        binding.librarianShowSearchListRecyclerView.setAdapter(librarianShowAllBooksListAdapter);
+        DividerItemDecoration itemDecorator = new DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL);
+        itemDecorator.setDrawable(Objects.requireNonNull(ContextCompat.getDrawable(requireContext(), R.drawable.all_books_list_divider)));
+        binding.librarianShowSearchListRecyclerView.addItemDecoration(itemDecorator);
+        binding.librarianShowSearchListRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(
+                getActivity(),
+                binding.librarianShowSearchListRecyclerView,
+                new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+
+                        if (fragmentActionListener != null) {
+                            Book book = (Book) filterObjectList.get(position);
+                            Bundle bundle = new Bundle();
+                            bundle.putInt(
+                                    FragmentActionListener.ACTION_KEY,
+                                    FragmentActionListener.SHOW_VIEW_BOOK_FRAGMENT_ACTION_VALUE
+                            );
+                            bundle.putBundle(
+                                    FragmentActionListener.SHOW_VIEW_BOOK_FRAGMENT_ACTION_KEY,
+                                    book.getBundle()
+                            );
+                            fragmentActionListener.onActionPerformed(bundle);
+                        }
+                    }
+
+                    @Override
+                    public void onItemLongClick(View view, int position) {
+                    }
+                }
+        ));
+
+        binding.librarianShowSearchListSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                filterObjectList = librarianShowAllBooksListAdapter.filter(s);
+                return false;
+            }
+        });
+    }
+
+    private void getStudentsList() {
         binding.librarianShowSearchListLoading.setVisibility(View.VISIBLE);
         db.collection("students")
                 .whereEqualTo("libraryCode", librarian.getLibraryCode())
@@ -148,6 +203,26 @@ public class LibrarianShowSearchListFragment extends Fragment {
                         librarianShowAllStudentsListAdapter.updateSecondList();
                         binding.librarianShowSearchListLoading.setVisibility(View.GONE);
 
+                    } else {
+                        Log.w("Error", "Error getting documents.", task.getException());
+                    }
+                });
+    }
+
+    private void getBookList() {
+        binding.librarianShowSearchListLoading.setVisibility(View.VISIBLE);
+        db.collection("books")
+                .whereEqualTo("libraryCode", librarian.getLibraryCode())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                            Book newBook = new Book(document);
+                            objectList.add(newBook);
+                        }
+                        filterObjectList.addAll(objectList);
+                        librarianShowAllBooksListAdapter.updateSecondList();
+                        binding.librarianShowSearchListLoading.setVisibility(View.GONE);
                     } else {
                         Log.w("Error", "Error getting documents.", task.getException());
                     }

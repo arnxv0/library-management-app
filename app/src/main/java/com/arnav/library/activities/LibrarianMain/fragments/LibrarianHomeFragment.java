@@ -61,5 +61,14 @@ public class LibrarianHomeFragment extends Fragment {
             fragmentActionListener.onActionPerformed(bundle);
         });
 
+        binding.editBooksButton.setOnClickListener(view1 -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt(
+                    FragmentActionListener.ACTION_KEY,
+                    FragmentActionListener.SHOW_BOOK_LIST_FRAGMENT_ACTION_VALUE
+            );
+            fragmentActionListener.onActionPerformed(bundle);
+        });
+
     }
 }

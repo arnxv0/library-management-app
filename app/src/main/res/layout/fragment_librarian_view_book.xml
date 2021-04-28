@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/fragment_drawer_shape"
+    tools:context=".activities.LibrarianMain.fragments.LibrarianViewBookFragment">
+
+    <ImageView
+        android:id="@+id/cylinderViewBookImageView"
+        android:layout_width="50dp"
+        android:layout_height="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        app:srcCompat="@drawable/drawer_cilinder_button" />
+
+    <Button
+        android:id="@+id/librarianViewBookEditButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
+        android:backgroundTint="@color/black"
+        android:fontFamily="@font/montserrat"
+        android:letterSpacing=".01"
+        android:paddingTop="7dp"
+        android:paddingBottom="7dp"
+        android:text="Edit Book"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:cornerRadius="10dp" />
+
+
+    <TextView
+        android:id="@+id/librarianViewBookTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/librarianViewBookCover"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center"
+        android:text="Book Title"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/librarianViewBookAuthorName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/librarianViewBookTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-5dp"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center"
+        android:text="Author"
+        android:textColor="@color/my_black"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/librarianViewBookAvailability"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/librarianViewBookAuthorName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center"
+        android:text="Available"
+        android:textColor="@color/my_black"
+        android:textSize="16sp"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/librarianViewBookDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/librarianViewBookEditButton"
+        android:layout_below="@+id/librarianViewBookAvailability"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:ems="15"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center"
+        android:inputType="textMultiLine"
+        android:isScrollContainer="true"
+        android:scrollbars="vertical"
+        android:text="Book description"
+        android:textColor="@color/my_black"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:id="@+id/librarianViewBookCover"
+        android:layout_below="@id/cylinderViewBookImageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        app:cornerRadius="20dp"
+        android:src="@drawable/libraryloginimg"
+        android:background="@drawable/list_image_container_background" />
+
+
+</RelativeLayout>
