@@ -28,6 +28,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -207,6 +208,7 @@ public class StudentHomeFragment extends Fragment {
                                                 dueRecordsListObject.setRecord(newRecord);
                                                 dueRecordsListObject.setBook(newBook);
                                                 dueBooksList.add(dueRecordsListObject);
+                                                Collections.sort(dueBooksList, (o1, o2) -> Integer.compare(o1.daysUntilBookReturn(), o2.daysUntilBookReturn()));
                                                 studentDuesListAdapter.notifyDataSetChanged();
                                                 binding.studentDuesListLoading.setVisibility(View.GONE);
                                             } else {
