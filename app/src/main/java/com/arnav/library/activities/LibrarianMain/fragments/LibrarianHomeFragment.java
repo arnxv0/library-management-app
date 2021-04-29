@@ -70,5 +70,14 @@ public class LibrarianHomeFragment extends Fragment {
             fragmentActionListener.onActionPerformed(bundle);
         });
 
+        binding.duesButton.setOnClickListener(view1 -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt(
+                    FragmentActionListener.ACTION_KEY,
+                    FragmentActionListener.SHOW_DUES_LIST_FRAGMENT_ACTION_VALUE
+            );
+            fragmentActionListener.onActionPerformed(bundle);
+        });
+
     }
 }

@@ -54,7 +54,13 @@ public class StudentMPBooksListAdapter extends RecyclerView.Adapter<StudentMPBoo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Book book = bookList.get(position);
-        holder.getBookTitleTextView().setText(book.getTitle());
+        String bookTitle = "";
+        if (book.getTitle().length() > 16) {
+            bookTitle = book.getTitle().substring(0, 16) + "...";
+        } else {
+            bookTitle = book.getTitle();
+        }
+        holder.getBookTitleTextView().setText(bookTitle);
         holder.getBookCoverImageView().setClipToOutline(true);
     }
 

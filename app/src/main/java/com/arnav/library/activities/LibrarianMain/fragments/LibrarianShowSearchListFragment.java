@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.arnav.library.R;
 import com.arnav.library.activities.LibrarianMain.adapters.LibrarianShowAllBooksListAdapter;
 import com.arnav.library.activities.LibrarianMain.adapters.LibrarianShowAllStudentsListAdapter;
+import com.arnav.library.activities.LibrarianMain.adapters.LibrarianShowDueRecordsListAdapter;
 import com.arnav.library.activities.StudentMain.listeners.RecyclerItemClickListener;
 import com.arnav.library.databinding.FragmentLibrarianShowSearchListBinding;
 import com.arnav.library.models.Book;
@@ -43,6 +44,7 @@ public class LibrarianShowSearchListFragment extends Fragment {
 
     LibrarianShowAllStudentsListAdapter librarianShowAllStudentsListAdapter;
     LibrarianShowAllBooksListAdapter librarianShowAllBooksListAdapter;
+    LibrarianShowDueRecordsListAdapter librarianShowDueRecordsListAdapter;
 
     int chosenList;
 
@@ -108,7 +110,31 @@ public class LibrarianShowSearchListFragment extends Fragment {
         } else if (chosenList == EDIT_BOOK_LIST) {
             getBookList();
             bookListSetup();
+        } else if (chosenList == DUES_LIST) {
+            getDuesList();
+            duesListSetup();
         }
+    }
+
+    private void duesListSetup() {
+        librarianShowDueRecordsListAdapter = new LibrarianShowDueRecordsListAdapter(filterObjectList);
+        binding.librarianShowSearchListRecyclerView.setAdapter(librarianShowDueRecordsListAdapter);
+        DividerItemDecoration itemDecorator = new DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL);
+        itemDecorator.setDrawable(Objects.requireNonNull(ContextCompat.getDrawable(requireContext(), R.drawable.librarian_dues_list_divider)));
+        binding.librarianShowSearchListRecyclerView.addItemDecoration(itemDecorator);
+        binding.librarianShowSearchListSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                filterObjectList = librarianShowDueRecordsListAdapter.filter(s);
+                return false;
+            }
+        });
+
     }
 
     private void studentsListSetup() {
@@ -262,13 +288,27 @@ public class LibrarianShowSearchListFragment extends Fragment {
                                             DocumentSnapshot newDocument = task1.getResult();
                                             if (newDocument.exists()) {
                                                 Book newBook = new Book(newDocument.getData(), newDocument.getId());
-                                                DueRecordsListObject dueRecordsListObject = new DueRecordsListObject();
-                                                dueRecordsListObject.setBook(newBook);
-                                                dueRecordsListObject.setRecord(newRecord);
-                                                objectList.add(dueRecordsListObject);
-                                                filterObjectList.add(dueRecordsListObject);
-//                                                librarianShowAllBooksListAdapter.updateSecondList();
-//                                                binding.librarianShowSearchListLoading.setVisibility(View.GONE);
+                                                db.collection("students")
+                                                        .whereEqualTo("uid", newRecord.getBorrowerID())
+                                                        .get()
+                                                        .addOnCompleteListener(task2 -> {
+                                                            if (task2.isSuccessful() && !task2.getResult().isEmpty()) {
+                                                                Student newStudent = null;
+                                                                for (QueryDocumentSnapshot document2 : Objects.requireNonNull(task2.getResult())) {
+                                                                    newStudent = new Student(document2);
+                                                                }
+                                                                DueRecordsListObject dueRecordsListObject = new DueRecordsListObject();
+                                                                dueRecordsListObject.setBook(newBook);
+                                                                dueRecordsListObject.setRecord(newRecord);
+                                                                dueRecordsListObject.setStudent(newStudent);
+                                                                objectList.add(dueRecordsListObject);
+                                                                filterObjectList.add(dueRecordsListObject);
+                                                                librarianShowDueRecordsListAdapter.updateSecondList();
+                                                                binding.librarianShowSearchListLoading.setVisibility(View.GONE);
+                                                            } else {
+                                                                Toast.makeText(getContext(), "Error getting documents.", Toast.LENGTH_LONG).show();
+                                                            }
+                                                        });
                                             } else {
                                                 Toast.makeText(getContext(), "Book not found. Record invalid.", Toast.LENGTH_LONG).show();
                                             }

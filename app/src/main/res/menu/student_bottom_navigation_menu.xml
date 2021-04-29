@@ -9,16 +9,16 @@
         android:id="@+id/page_2"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_search_24"
-        android:title="Search"/>
+        android:title="Search" />
     <item
         android:id="@+id/page_3"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_library_books_24"
-        android:title="My Books"/>
-    <item
-        android:id="@+id/page_4"
-        android:enabled="true"
-        android:icon="@drawable/ic_baseline_qr_code_scanner_24"
-        android:title="Scan"/>
+        android:title="My Books" />
+    <!--    <item-->
+    <!--        android:id="@+id/page_4"-->
+    <!--        android:enabled="true"-->
+    <!--        android:icon="@drawable/ic_baseline_qr_code_scanner_24"-->
+    <!--        android:title="Scan"/>-->
 
 </menu>

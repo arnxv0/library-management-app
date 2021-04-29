@@ -185,6 +185,21 @@ public class LibrarianMainActivity extends AppCompatActivity implements Fragment
                 .commit();
     }
 
+    public void showDuesListFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(
+                        R.id.librarian_fragment_container,
+                        LibrarianShowSearchListFragment.newInstance(
+                                librarian,
+                                this,
+                                LibrarianShowSearchListFragment.DUES_LIST
+                        )
+                )
+                .addToBackStack(null)
+                .commit();
+    }
+
     public void showViewStudentFragment(Student student) {
         getSupportFragmentManager()
                 .beginTransaction()
@@ -341,6 +356,10 @@ public class LibrarianMainActivity extends AppCompatActivity implements Fragment
             Student student = new Student(bundle.getBundle(FragmentActionListener.SHOW_STUDENT_PROFILE_FRAGMENT_ACTION_KEY));
             getSupportFragmentManager().popBackStack();
             showViewStudentFragment(student);
+        } else if (selectedAction == FragmentActionListener.SHOW_DUES_LIST_FRAGMENT_ACTION_VALUE) {
+            previousItemId = 69;
+            getSupportFragmentManager().popBackStack();
+            showDuesListFragment();
         }
 
     }
