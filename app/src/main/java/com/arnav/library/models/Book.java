@@ -55,6 +55,16 @@ public class Book {
         this.bookId = document.getId();
     }
 
+    public Book(Map<String, Object> document, String documentId) {
+        this.title = (String) document.get("title");
+        this.author = (String) document.get("author");
+        this.libraryCode = (String) document.get("libraryCode");
+        this.description = (String) document.get("description");
+        this.librarianID = (String) document.get("librarianID");
+        this.availableCount = (String) document.get("availableCount");
+        this.bookId = documentId;
+    }
+
     public String getTitle() {
         return title;
     }

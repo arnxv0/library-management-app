@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,8 +22,11 @@ import com.arnav.library.activities.LibrarianMain.adapters.LibrarianShowAllStude
 import com.arnav.library.activities.StudentMain.listeners.RecyclerItemClickListener;
 import com.arnav.library.databinding.FragmentLibrarianShowSearchListBinding;
 import com.arnav.library.models.Book;
+import com.arnav.library.models.DueRecordsListObject;
 import com.arnav.library.models.Librarian;
+import com.arnav.library.models.Record;
 import com.arnav.library.models.Student;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -239,6 +243,85 @@ public class LibrarianShowSearchListFragment extends Fragment {
                         Log.w("Error", "Error getting documents.", task.getException());
                     }
                 });
+    }
+
+    private void getDuesList() {
+        binding.librarianShowSearchListLoading.setVisibility(View.VISIBLE);
+        db.collection("records")
+                .whereEqualTo("returned", "false")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                            Record newRecord = new Record(document);
+                            db.collection("books")
+                                    .document(newRecord.getBookID())
+                                    .get()
+                                    .addOnCompleteListener(task1 -> {
+                                        if (task1.isSuccessful()) {
+                                            DocumentSnapshot newDocument = task1.getResult();
+                                            if (newDocument.exists()) {
+                                                Book newBook = new Book(newDocument.getData(), newDocument.getId());
+                                                DueRecordsListObject dueRecordsListObject = new DueRecordsListObject();
+                                                dueRecordsListObject.setBook(newBook);
+                                                dueRecordsListObject.setRecord(newRecord);
+                                                objectList.add(dueRecordsListObject);
+                                                filterObjectList.add(dueRecordsListObject);
+//                                                librarianShowAllBooksListAdapter.updateSecondList();
+//                                                binding.librarianShowSearchListLoading.setVisibility(View.GONE);
+                                            } else {
+                                                Toast.makeText(getContext(), "Book not found. Record invalid.", Toast.LENGTH_LONG).show();
+                                            }
+                                        } else {
+                                            Log.w("Error", "Error getting document.", task1.getException());
+                                        }
+                                    });
+                        }
+                    } else {
+                        Toast.makeText(getContext(), "getDueLit:" + task.getException(), Toast.LENGTH_LONG).show();
+                        Log.w("Error", "Error getting documents.", task.getException());
+                    }
+                });
+
+    }
+
+    private void getAllRecordsList() {
+        binding.librarianShowSearchListLoading.setVisibility(View.VISIBLE);
+        db.collection("records")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                            Record newRecord = new Record(document);
+                            db.collection("books")
+                                    .document(newRecord.getBookID())
+                                    .get()
+                                    .addOnCompleteListener(task1 -> {
+                                        if (task1.isSuccessful()) {
+                                            DocumentSnapshot newDocument = task1.getResult();
+                                            if (newDocument.exists()) {
+                                                Book newBook = new Book(newDocument.getData(), newDocument.getId());
+                                                DueRecordsListObject dueRecordsListObject = new DueRecordsListObject();
+                                                dueRecordsListObject.setBook(newBook);
+                                                dueRecordsListObject.setRecord(newRecord);
+                                                objectList.add(dueRecordsListObject);
+                                                filterObjectList.add(dueRecordsListObject);
+//                                                librarianShowAllBooksListAdapter.updateSecondList();
+//                                                binding.librarianShowSearchListLoading.setVisibility(View.GONE);
+                                            } else {
+                                                Toast.makeText(getContext(), "Book not found. Record invalid.", Toast.LENGTH_LONG).show();
+                                            }
+                                        } else {
+                                            Log.w("Error", "Error getting document.", task1.getException());
+                                        }
+                                    });
+                        }
+                    } else {
+                        Toast.makeText(getContext(), "getDueLit:" + task.getException(), Toast.LENGTH_LONG).show();
+                        Log.w("Error", "Error getting documents.", task.getException());
+                    }
+                });
+
     }
 
     public void setFragmentActionListener(FragmentActionListener fragmentActionListener) {

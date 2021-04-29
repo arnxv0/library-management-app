@@ -323,6 +323,7 @@ public class LibrarianMainActivity extends AppCompatActivity implements Fragment
             getSupportFragmentManager().popBackStack();
             showSearchStudentFragment();
         } else if (selectedAction == FragmentActionListener.SHOW_BOOK_LIST_FRAGMENT_ACTION_VALUE) {
+            previousItemId = 69;
             getSupportFragmentManager().popBackStack();
             showSearchBookFragment();
         } else if (selectedAction == FragmentActionListener.SHOW_VIEW_BOOK_FRAGMENT_ACTION_VALUE) {

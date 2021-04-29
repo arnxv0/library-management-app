@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,6 +25,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -84,6 +86,7 @@ public class LibrarianAddRecordFragment extends Fragment {
         assert this.getArguments() != null;
         record = new Record(this.getArguments().getBundle("record"));
         action = this.getArguments().getString("action");
+
         binding = FragmentLibrarianAddRecordBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -91,6 +94,7 @@ public class LibrarianAddRecordFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         binding.confirmButton.setOnClickListener(view1 -> {
             if (action.equals("Borrow")) {
                 addRecord();
@@ -110,7 +114,11 @@ public class LibrarianAddRecordFragment extends Fragment {
     }
 
     private void updateReturnRecord() {
-        String returnDate = "";
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy", Locale.getDefault());
+        Date today = new Date();
+        String returnDate = dateFormat.format(today);
+
         Map<String, Object> updateMap = new HashMap<>();
         updateMap.put("returned", "true");
         updateMap.put("returnDate", returnDate);
@@ -121,24 +129,29 @@ public class LibrarianAddRecordFragment extends Fragment {
                 .update(updateMap)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        Log.i("updateReturnRecord", "Updated");
-                        int newCount = Integer.parseInt(book.getAvailableCount()) - 1;
+                        int newCount = Integer.parseInt(book.getAvailableCount()) + 1;
                         db.collection("books")
                                 .document(book.getBookId())
                                 .update("availableCount", String.valueOf(newCount))
                                 .addOnCompleteListener(task1 -> {
                                     if (task1.isSuccessful()) {
+                                        Toast.makeText(getContext(), "Successfully returned book", Toast.LENGTH_LONG).show();
                                         loadingDialog.hideDialog();
                                         Bundle bundle = new Bundle();
                                         bundle.putInt(FragmentActionListener.ACTION_KEY, FragmentActionListener.ADD_RECORD_ACTION_VALUE);
                                         fragmentActionListener.onActionPerformed(bundle);
+                                    } else {
+                                        Toast.makeText(getContext(), "Book count not updated, please update manually", Toast.LENGTH_LONG).show();
                                     }
                                 });
                     } else {
                         loadingDialog.hideDialog();
-                        Log.i("updateReturnRecord", task.getException().toString());
+                        Toast.makeText(getContext(), "Try again later!", Toast.LENGTH_LONG).show();
                         Bundle bundle = new Bundle();
-                        bundle.putInt(FragmentActionListener.ACTION_KEY, FragmentActionListener.ADD_RECORD_ACTION_VALUE);
+                        bundle.putInt(
+                                FragmentActionListener.ACTION_KEY,
+                                FragmentActionListener.ADD_RECORD_ACTION_VALUE
+                        );
                         fragmentActionListener.onActionPerformed(bundle);
                     }
                 });
@@ -160,19 +173,22 @@ public class LibrarianAddRecordFragment extends Fragment {
                                     .addOnCompleteListener(task1 -> {
                                         if (task1.isSuccessful()) {
                                             loadingDialog.hideDialog();
-                                            Bundle bundle = new Bundle();
-                                            bundle.putInt(FragmentActionListener.ACTION_KEY, FragmentActionListener.ADD_RECORD_ACTION_VALUE);
-                                            fragmentActionListener.onActionPerformed(bundle);
+                                        } else {
+                                            Toast.makeText(getContext(), "Book count not updated, please update manually", Toast.LENGTH_LONG).show();
                                         }
+                                        Bundle bundle = new Bundle();
+                                        bundle.putInt(FragmentActionListener.ACTION_KEY, FragmentActionListener.ADD_RECORD_ACTION_VALUE);
+                                        fragmentActionListener.onActionPerformed(bundle);
                                     });
-                            Log.i("addRecord", task.getResult().toString());
                         } else {
                             loadingDialog.hideDialog();
+                            Toast.makeText(getContext(), "Try again!", Toast.LENGTH_LONG).show();
                             Log.i("addRecord", task.getException().toString());
                         }
                     });
         } else {
-            Log.i("addRecord", "error");
+            Toast.makeText(getContext(), "Book unavailable to borrow", Toast.LENGTH_LONG).show();
+            Log.i("addRecord", "Book unavailable to borrow");
         }
     }
 
@@ -214,6 +230,7 @@ public class LibrarianAddRecordFragment extends Fragment {
                             }
                             binding.editTextDate.setText(record.getDueDate());
                         } else {
+                            Toast.makeText(getContext(), "Not borrowed this book", Toast.LENGTH_LONG).show();
                             Log.i("getAndSetDetails", "Not borrowed this book");
                             Bundle bundle = new Bundle();
                             bundle.putInt(FragmentActionListener.ACTION_KEY, FragmentActionListener.ADD_RECORD_ACTION_VALUE);
@@ -221,7 +238,7 @@ public class LibrarianAddRecordFragment extends Fragment {
                         }
 
                     });
-        } else {
+        } else if (action.equals("Borrow")) {
 
             loadingDialog.showDialog();
             db.collection("records")
@@ -232,6 +249,7 @@ public class LibrarianAddRecordFragment extends Fragment {
                     .addOnCompleteListener(task1 -> {
                         if (task1.isSuccessful() && !task1.getResult().isEmpty()) {
                             loadingDialog.hideDialog();
+                            Toast.makeText(getContext(), "Cannot borrow more than one copy", Toast.LENGTH_LONG).show();
                             Log.i("getAndSetDetails", "Cannot borrow more than one copy");
                             Bundle bundle = new Bundle();
                             bundle.putInt(FragmentActionListener.ACTION_KEY, FragmentActionListener.ADD_RECORD_ACTION_VALUE);
@@ -239,7 +257,7 @@ public class LibrarianAddRecordFragment extends Fragment {
                         } else {
                             AtomicBoolean apiCall1 = new AtomicBoolean(false);
                             AtomicBoolean apiCall2 = new AtomicBoolean(false);
-                            Log.i("inside", record.getBookID());
+
                             db.collection("books")
                                     .document(record.getBookID())
                                     .get()
