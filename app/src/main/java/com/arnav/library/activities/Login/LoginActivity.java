@@ -56,9 +56,6 @@ public class LoginActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.passwordEditText);
         loadingDialog = new LoadingDialog(LoginActivity.this);
         loadingDialog.initializeLoadingDialog();
-
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
     }
 
 

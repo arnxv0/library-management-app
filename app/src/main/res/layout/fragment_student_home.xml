@@ -7,18 +7,59 @@
     android:background="@color/white">
 
     <TextView
-        android:id="@+id/mpListLabelTextView"
+        android:id="@+id/studentDuesListLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:text="Most Popular"
+        android:text="Dues"
         android:fontFamily="@font/montserrat"
         android:textStyle="bold"
         android:textSize="18dp"
         android:textColor="@color/black" />
+
+    <ProgressBar
+        android:id="@+id/studentDuesListLoading"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/studentDuesListLabelTextView"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp"
+        android:indeterminate="true"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@color/black"
+        android:visibility="visible" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/studentDuesListRecyclerView"
+        android:layout_width="wrap_content"
+        android:paddingStart="20dp"
+        android:clipToPadding="false"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/studentDuesListLabelTextView"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="0dp" />
+
+    <TextView
+        android:id="@+id/mpListLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/studentDuesListLabelTextView"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="210dp"
+        android:fontFamily="@font/montserrat"
+        android:text="Most Popular"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:textStyle="bold" />
 
     <ProgressBar
         android:id="@+id/studentMPListLoading"
@@ -47,12 +88,4 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="0dp" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Home Page"
-        android:visibility="gone"
-        android:textColor="#000000" />
 </RelativeLayout>
