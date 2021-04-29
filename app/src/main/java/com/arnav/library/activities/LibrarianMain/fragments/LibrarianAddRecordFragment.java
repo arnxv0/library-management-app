@@ -124,37 +124,95 @@ public class LibrarianAddRecordFragment extends Fragment {
         updateMap.put("returnDate", returnDate);
 
         loadingDialog.showDialog();
-        db.collection("records")
-                .document(returnRecordDocId)
-                .update(updateMap)
+        db.collection("books")
+                .document(record.getBookID())
+                .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        int newCount = Integer.parseInt(book.getAvailableCount()) + 1;
-                        db.collection("books")
-                                .document(book.getBookId())
-                                .update("availableCount", String.valueOf(newCount))
-                                .addOnCompleteListener(task1 -> {
-                                    if (task1.isSuccessful()) {
-                                        Toast.makeText(getContext(), "Successfully returned book", Toast.LENGTH_LONG).show();
-                                        loadingDialog.hideDialog();
-                                        Bundle bundle = new Bundle();
-                                        bundle.putInt(FragmentActionListener.ACTION_KEY, FragmentActionListener.ADD_RECORD_ACTION_VALUE);
-                                        fragmentActionListener.onActionPerformed(bundle);
-                                    } else {
-                                        Toast.makeText(getContext(), "Book count not updated, please update manually", Toast.LENGTH_LONG).show();
-                                    }
-                                });
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            book = new Book(
+                                    document.getString("title"),
+                                    document.getString("author"),
+                                    document.getString("libraryCode"),
+                                    document.getString("description"),
+                                    document.getString("librarianID"),
+                                    document.getString("availableCount"),
+                                    document.getId()
+                            );
+                            db.collection("records")
+                                    .document(returnRecordDocId)
+                                    .update(updateMap)
+                                    .addOnCompleteListener(task -> {
+                                        if (task.isSuccessful()) {
+                                            int newCount = Integer.parseInt(book.getAvailableCount()) + 1;
+                                            db.collection("books")
+                                                    .document(book.getBookId())
+                                                    .update("availableCount", String.valueOf(newCount))
+                                                    .addOnCompleteListener(task1 -> {
+                                                        if (task1.isSuccessful()) {
+                                                            Toast.makeText(getContext(), "Successfully returned book", Toast.LENGTH_LONG).show();
+                                                            loadingDialog.hideDialog();
+                                                            Bundle bundle = new Bundle();
+                                                            bundle.putInt(FragmentActionListener.ACTION_KEY, FragmentActionListener.ADD_RECORD_ACTION_VALUE);
+                                                            fragmentActionListener.onActionPerformed(bundle);
+                                                        } else {
+                                                            Toast.makeText(getContext(), "Book count not updated, please update manually", Toast.LENGTH_LONG).show();
+                                                        }
+                                                    });
+                                        } else {
+                                            loadingDialog.hideDialog();
+                                            Toast.makeText(getContext(), "Try again later!", Toast.LENGTH_LONG).show();
+                                            Bundle bundle = new Bundle();
+                                            bundle.putInt(
+                                                    FragmentActionListener.ACTION_KEY,
+                                                    FragmentActionListener.ADD_RECORD_ACTION_VALUE
+                                            );
+                                            fragmentActionListener.onActionPerformed(bundle);
+                                        }
+                                    });
+
+                        } else {
+                            Toast.makeText(getContext(), "Book not found!", Toast.LENGTH_LONG).show();
+                            Log.i("not found", task.getResult().toString());
+                        }
                     } else {
-                        loadingDialog.hideDialog();
-                        Toast.makeText(getContext(), "Try again later!", Toast.LENGTH_LONG).show();
-                        Bundle bundle = new Bundle();
-                        bundle.putInt(
-                                FragmentActionListener.ACTION_KEY,
-                                FragmentActionListener.ADD_RECORD_ACTION_VALUE
-                        );
-                        fragmentActionListener.onActionPerformed(bundle);
+                        Toast.makeText(getContext(), "Try again later", Toast.LENGTH_LONG).show();
+                        Log.e("error", task.getException().toString());
                     }
                 });
+
+//        db.collection("records")
+//                .document(returnRecordDocId)
+//                .update(updateMap)
+//                .addOnCompleteListener(task -> {
+//                    if (task.isSuccessful()) {
+//                        int newCount = Integer.parseInt(book.getAvailableCount()) + 1;
+//                        db.collection("books")
+//                                .document(book.getBookId())
+//                                .update("availableCount", String.valueOf(newCount))
+//                                .addOnCompleteListener(task1 -> {
+//                                    if (task1.isSuccessful()) {
+//                                        Toast.makeText(getContext(), "Successfully returned book", Toast.LENGTH_LONG).show();
+//                                        loadingDialog.hideDialog();
+//                                        Bundle bundle = new Bundle();
+//                                        bundle.putInt(FragmentActionListener.ACTION_KEY, FragmentActionListener.ADD_RECORD_ACTION_VALUE);
+//                                        fragmentActionListener.onActionPerformed(bundle);
+//                                    } else {
+//                                        Toast.makeText(getContext(), "Book count not updated, please update manually", Toast.LENGTH_LONG).show();
+//                                    }
+//                                });
+//                    } else {
+//                        loadingDialog.hideDialog();
+//                        Toast.makeText(getContext(), "Try again later!", Toast.LENGTH_LONG).show();
+//                        Bundle bundle = new Bundle();
+//                        bundle.putInt(
+//                                FragmentActionListener.ACTION_KEY,
+//                                FragmentActionListener.ADD_RECORD_ACTION_VALUE
+//                        );
+//                        fragmentActionListener.onActionPerformed(bundle);
+//                    }
+//                });
     }
 
     private void addRecord() {
