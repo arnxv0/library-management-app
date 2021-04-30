@@ -76,6 +76,8 @@ public class LibrarianViewBookFragment extends Fragment {
             fragmentActionListener.onActionPerformed(bundle);
         });
 
+        Book.getAndSetBookImage(book, binding.librarianViewBookCover, getContext());
+
     }
 
     public void setFragmentActionListener(FragmentActionListener fragmentActionListener) {

@@ -1,5 +1,6 @@
 package com.arnav.library.activities.LibrarianMain.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ public class LibrarianShowAllBooksListAdapter extends RecyclerView.Adapter<Libra
 
     List<Object> bookList;
     ArrayList<Object> filterBookList;
+    Context context;
 
     public LibrarianShowAllBooksListAdapter(List<Object> bookList) {
         this.bookList = bookList;
@@ -62,6 +64,9 @@ public class LibrarianShowAllBooksListAdapter extends RecyclerView.Adapter<Libra
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        this.context = parent.getContext();
+
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.librarian_search_books_list_item, parent, false);
         return new ViewHolder(view);
@@ -76,6 +81,8 @@ public class LibrarianShowAllBooksListAdapter extends RecyclerView.Adapter<Libra
         holder.getBookTitleTextView().setText(book.getTitle());
         holder.getBookAuthorTextView().setText(authorString);
         holder.getBookAvailableTextView().setText(book.getAvailability());
+
+        Book.getAndSetBookImage(book, holder.getBookCoverImageView(), context);
     }
 
     @Override
