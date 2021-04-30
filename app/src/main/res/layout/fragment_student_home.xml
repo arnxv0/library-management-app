@@ -20,6 +20,20 @@
         android:textSize="18dp"
         android:textColor="@color/black" />
 
+    <TextView
+        android:id="@+id/mpListNoDueBooksTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/studentDuesListLabelTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="138dp"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/montserrat"
+        android:text="No due books"
+        android:textColor="@color/black"
+        android:visibility="gone"
+        android:textSize="16dp" />
+
     <ProgressBar
         android:id="@+id/studentDuesListLoading"
         style="?android:attr/progressBarStyle"

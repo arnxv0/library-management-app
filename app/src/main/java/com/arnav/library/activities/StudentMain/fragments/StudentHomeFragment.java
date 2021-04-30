@@ -193,6 +193,15 @@ public class StudentHomeFragment extends Fragment {
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+
+                        if (Objects.requireNonNull(task.getResult()).isEmpty()) {
+                            binding.studentDuesListLoading.setVisibility(View.GONE);
+                            binding.mpListNoDueBooksTextView.setVisibility(View.VISIBLE);
+                            return;
+                        } else {
+                            binding.mpListNoDueBooksTextView.setVisibility(View.GONE);
+                        }
+
                         for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                             Record newRecord = new Record(document);
 
