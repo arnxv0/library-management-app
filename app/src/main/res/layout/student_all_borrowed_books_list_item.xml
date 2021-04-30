@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/student_all_borrowed_books_list_item_card_background">
+
+    <ImageView
+        android:id="@+id/studentAllBorrowedBooksBookImageView"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/libraryloginimg"
+        android:background="@color/white" />
+
+    <TextView
+        android:id="@+id/studentAllBorrowedBooksBookTitleTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="20dp"
+        android:layout_toEndOf="@+id/studentAllBorrowedBooksBookImageView"
+        android:fontFamily="@font/montserrat"
+        android:text="Book Title"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/studentAllBorrowedBooksBookDueDays"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="135dp"
+        android:layout_toEndOf="@+id/studentAllBorrowedBooksBookImageView"
+        android:drawableEnd="@drawable/ic_baseline_info_24"
+        android:drawablePadding="10dp"
+        android:fontFamily="@font/montserrat"
+        android:text="Due in 4 days"
+        android:textColor="@color/red"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/studentAllBorrowedBooksBookAuthorTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/studentAllBorrowedBooksBookTitleTextView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20dp"
+        android:layout_toEndOf="@+id/studentAllBorrowedBooksBookImageView"
+        android:text="Author"
+        android:textColor="@color/my_black"
+        android:textColorHighlight="#FFFFFF"
+        android:textSize="16sp" />
+
+</RelativeLayout>

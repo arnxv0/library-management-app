@@ -1,24 +1,16 @@
 package com.arnav.library.activities.StudentMain.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.arnav.library.R;
-import com.arnav.library.activities.Login.LoginActivity;
 import com.arnav.library.databinding.FragmentStudentProfileBinding;
 import com.arnav.library.models.Student;
-import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.Objects;
 
 public class StudentProfileFragment extends Fragment {
 
@@ -61,6 +53,9 @@ public class StudentProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.myName.setText(student.getName());
+        binding.email.setText(student.getEmail());
+        binding.PhoneNo.setText(student.getPhone());
+        binding.myIdTextView.setText(student.getLibraryID());
         binding.studentLogoutButton.setOnClickListener(view1 -> logout());
     }
 

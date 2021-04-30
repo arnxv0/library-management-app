@@ -3,7 +3,6 @@ package com.arnav.library.activities.StudentMain;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.arnav.library.R;
 import com.arnav.library.activities.Login.LoginActivity;
 import com.arnav.library.activities.StudentMain.fragments.FragmentActionListener;
+import com.arnav.library.activities.StudentMain.fragments.StudentAllBorrowedBooksFragment;
 import com.arnav.library.activities.StudentMain.fragments.StudentHomeFragment;
 import com.arnav.library.activities.StudentMain.fragments.StudentProfileFragment;
 import com.arnav.library.activities.StudentMain.fragments.StudentSearchBooksFragment;
@@ -63,7 +63,7 @@ public class StudentMainActivity extends AppCompatActivity implements FragmentAc
                 previousItemId = itemId;
 
                 if (getSupportFragmentManager().getBackStackEntryCount() >= 2) {
-                    Log.i("HomeFragmentin", String.valueOf(getSupportFragmentManager().getBackStackEntryCount()));
+//                    Log.i("HomeFragmentin", String.valueOf(getSupportFragmentManager().getBackStackEntryCount()));
                     getSupportFragmentManager().popBackStack();
                 }
                 if (itemId == R.id.page_1) {
@@ -71,9 +71,9 @@ public class StudentMainActivity extends AppCompatActivity implements FragmentAc
                 } else if (itemId == R.id.page_2) {
                     showStudentSearchBooksFragment();
                 } else if (itemId == R.id.page_3) {
-                    showStudentSearchBooksFragment();
+                    showAllBorrowedBooksFragment();
                 } else if (itemId == R.id.page_4) {
-                    showStudentSearchBooksFragment();
+//                    showStudentSearchBooksFragment();
                 }
                 return true;
             };
@@ -101,6 +101,17 @@ public class StudentMainActivity extends AppCompatActivity implements FragmentAc
                 .commit();
     }
 
+    private void showAllBorrowedBooksFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(
+                        R.id.student_fragment_container,
+                        StudentAllBorrowedBooksFragment.newInstance(student, this)
+                )
+                .addToBackStack(null)
+                .commit();
+    }
+
     public void showStudentProfileFragment(View view) {
         int profileFragmentId = 1;
         if (previousItemId == profileFragmentId) {
@@ -108,7 +119,7 @@ public class StudentMainActivity extends AppCompatActivity implements FragmentAc
         }
         previousItemId = profileFragmentId;
 
-        if(getSupportFragmentManager().getBackStackEntryCount() >= 2) {
+        if (getSupportFragmentManager().getBackStackEntryCount() >= 2) {
             getSupportFragmentManager().popBackStack();
         }
         getSupportFragmentManager().popBackStack();

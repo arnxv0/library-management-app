@@ -200,7 +200,7 @@ public class StudentHomeFragment extends Fragment {
                                     .document(newRecord.getBookID())
                                     .get()
                                     .addOnCompleteListener(task1 -> {
-                                        if (task.isSuccessful()) {
+                                        if (task1.isSuccessful()) {
                                             DocumentSnapshot newDocument = task1.getResult();
                                             if (newDocument.exists()) {
                                                 Book newBook = new Book(newDocument.getData(), newDocument.getId());
