@@ -13,16 +13,15 @@
         android:roundIcon="@mipmap/book_app_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Library">
-        <activity android:name=".activities.LibrarianMain.LibrarianMainActivity"></activity>
-        <activity android:name=".activities.Login.LoginActivity">
+        <activity android:name=".activities.LibrarianMain.LibrarianMainActivity" />
+        <activity android:name=".activities.Login.LoginActivity" />
+        <activity android:name=".activities.StudentMain.StudentMainActivity" />
+        <activity android:name=".activities.SplashScreen.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".activities.StudentMain.StudentMainActivity" />
     </application>
 
 </manifest>

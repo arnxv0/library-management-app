@@ -49,21 +49,15 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
 
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
+        setContentView(R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance();
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         loadingDialog = new LoadingDialog(LoginActivity.this);
         loadingDialog.initializeLoadingDialog();
-    }
-
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
     }
 
     private void updateUI(FirebaseUser currentUser) {
