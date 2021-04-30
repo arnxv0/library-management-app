@@ -1,8 +1,19 @@
 package com.arnav.library.models;
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +27,7 @@ public class Book {
     private final String librarianID;
     private final String availableCount;
     private final String bookId;
+    private String imageURl;
 
     public Book(Bundle bundle) {
         this.title = bundle.getString("title");
@@ -65,6 +77,35 @@ public class Book {
         this.bookId = documentId;
     }
 
+    public static void getAndSetBookImage(Book book, ImageView imageView, Context context) {
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        String bookFilePath = "bookCoverImages/" + book.getBookId() + ".jpg";
+
+        StorageReference storageRef = storage.getReference();
+        try {
+            StorageReference mountainImagesRef = storageRef.child(bookFilePath);
+            mountainImagesRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    if (context != null) {
+                        Glide.with(context)
+                                .load(uri.toString())
+                                .into(imageView);
+                    }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    Log.e("Failed to get img url", exception.toString());
+                }
+            });
+        } catch (Exception e) {
+            Log.e("Image doesn't exist", e.toString());
+        }
+
+    }
+
     public String getTitle() {
         return title;
     }
@@ -91,6 +132,14 @@ public class Book {
 
     public String getBookId() {
         return bookId;
+    }
+
+    public String getImageURl() {
+        return imageURl;
+    }
+
+    public void setImageURl(String imageURl) {
+        this.imageURl = imageURl;
     }
 
     public Map<String, Object> getObjectMap() {

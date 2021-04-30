@@ -1,5 +1,6 @@
 package com.arnav.library.activities.StudentMain.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import java.util.List;
 public class StudentMPBooksListAdapter extends RecyclerView.Adapter<StudentMPBooksListAdapter.ViewHolder> {
 
     List<Book> bookList;
+    Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView bookTitleTextView;
@@ -46,6 +48,7 @@ public class StudentMPBooksListAdapter extends RecyclerView.Adapter<StudentMPBoo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        this.context = parent.getContext();
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.student_mplist_item, parent, false);
         return new ViewHolder(view);
@@ -62,6 +65,8 @@ public class StudentMPBooksListAdapter extends RecyclerView.Adapter<StudentMPBoo
         }
         holder.getBookTitleTextView().setText(bookTitle);
         holder.getBookCoverImageView().setClipToOutline(true);
+
+        Book.getAndSetBookImage(book, holder.getBookCoverImageView(), context);
     }
 
     @Override

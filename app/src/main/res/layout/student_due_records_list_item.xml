@@ -13,7 +13,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
-        android:background="@color/white"
+        android:background="@drawable/list_image_container_background"
         android:src="@drawable/libraryloginimg" />
 
     <TextView

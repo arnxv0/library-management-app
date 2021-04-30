@@ -1,5 +1,6 @@
 package com.arnav.library.activities.StudentMain.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.arnav.library.R;
+import com.arnav.library.models.Book;
 import com.arnav.library.models.DueRecordsListObject;
 
 import java.util.List;
@@ -17,6 +19,8 @@ import java.util.List;
 public class StudentDuesListAdapter extends RecyclerView.Adapter<StudentDuesListAdapter.ViewHolder> {
 
     List<DueRecordsListObject> dueRecordsListObjectList;
+
+    Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView bookTitleTextView;
@@ -58,6 +62,8 @@ public class StudentDuesListAdapter extends RecyclerView.Adapter<StudentDuesList
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        this.context = parent.getContext();
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.student_due_records_list_item, parent, false);
         return new ViewHolder(view);
@@ -80,6 +86,8 @@ public class StudentDuesListAdapter extends RecyclerView.Adapter<StudentDuesList
         holder.getBookAuthorTextView().setText(authorName);
         holder.getBookDueDaysTextView().setText(dueDays);
         holder.getBookCoverImageView().setClipToOutline(true);
+
+        Book.getAndSetBookImage(dueRecordsListObject.getBook(), holder.getBookCoverImageView(), context);
     }
 
     @Override

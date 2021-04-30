@@ -52,6 +52,8 @@ public class StudentBooksListAdapter extends ArrayAdapter {
         bookAuthorTextView.setText(authorString);
         bookAvailableTextView.setText(book.getAvailability());
 
+        Book.getAndSetBookImage(book, bookCoverImageView, parent.getContext());
+
         return view;
     }
 

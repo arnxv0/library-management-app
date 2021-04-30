@@ -122,6 +122,8 @@ public class StudentViewBookFragment extends Fragment {
             createQRCodeDialog(qrCodeBitmap);
         });
 
+        Book.getAndSetBookImage(book, binding.viewBookCover, getContext());
+
     }
 
     private Bitmap getQrCodeBitmap(String message) {
