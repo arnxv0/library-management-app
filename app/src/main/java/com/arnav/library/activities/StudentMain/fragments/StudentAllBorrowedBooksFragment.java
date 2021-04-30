@@ -1,6 +1,7 @@
 package com.arnav.library.activities.StudentMain.fragments;
 
 import android.os.Bundle;
+import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,6 +76,9 @@ public class StudentAllBorrowedBooksFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        TransitionInflater inflater = TransitionInflater.from(requireContext());
+        setEnterTransition(inflater.inflateTransition(R.transition.slide_in_up));
 
         recordsListObjectList = new ArrayList<>();
         getAllBorrowedBooksList();
