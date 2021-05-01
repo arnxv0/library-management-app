@@ -72,7 +72,7 @@ public class DueRecordsListObject {
         dueDateCal.setTime(expireConvertedDate);
         long diff = dueDateCal.getTimeInMillis() - todayCal.getTimeInMillis();
         int dayCount = (int) diff / (24 * 60 * 60 * 1000);
-        return dayCount;
+        return dayCount + 1;
     }
 
 }
